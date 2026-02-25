@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reiver Record Tracker</title>
+<style>
+body {font-family: Arial, sans-serif; margin:0; padding:0; background:#0d1b2a; color:white;}
+header {padding:20px; text-align:center;}
+h1 {margin:0;}
+.container {padding:15px;}
+.card {background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:15px;}
+.record {font-size:18px;font-weight:bold;}
+button {margin:5px 5px 0 0; padding:6px 10px; border:none; border-radius:8px; background:#415a77; color:white;}
+button:hover {background:#778da9;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Iowa Western Athletics Tracker</h1>
+  <p>2025–2026 Season</p>
+</header>
+
+<div class="container" id="sportsContainer"></div>
+
+<script>
+const sports = [
+  {name:"Football", wins:0, losses:0, ties:0},
+  {name:"Men's Basketball", wins:0, losses:0, ties:0},
+  {name:"Women's Basketball", wins:0, losses:0, ties:0},
+  {name:"Baseball", wins:0, losses:0, ties:0},
+  {name:"Softball", wins:0, losses:0, ties:0},
+  {name:"Volleyball", wins:0, losses:0, ties:0},
+  {name:"Men's Soccer", wins:0, losses:0, ties:0},
+  {name:"Women's Soccer", wins:0, losses:0, ties:0},
+  {name:"Track & Field", wins:0, losses:0, ties:0},
+  {name:"Wrestling", wins:0, losses:0, ties:0}
+];
+
+function winPct(w,l,t){const total=w+l+t; return total===0?"0.000":(w/total).toFixed(3);}
+function render(){
+  const container=document.getElementById("sportsContainer");
+  container.innerHTML="";
+  sports.forEach((s,i)=>{
+    const card=document.createElement("div"); card.className="card";
+    card.innerHTML=`
+      <h2>${s.name}</h2>
+      <div class="record">${s.wins}-${s.losses}-${s.ties}</div>
+      <div>Win %: ${winPct(s.wins,s.losses,s.ties)}</div>
+      <button onclick="addWin(${i})">+ Win</button>
+      <button onclick="addLoss(${i})">+ Loss</button>
+      <button onclick="addTie(${i})">+ Tie</button>
+    `;
+    container.appendChild(card);
+  });
+}
+function addWin(i){sports[i].wins++; render();}
+function addLoss(i){sports[i].losses++; render();}
+function addTie(i){sports[i].ties++; render();}
+render();
+</script>
+
+</body>
+</html>
